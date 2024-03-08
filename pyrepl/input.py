@@ -23,7 +23,6 @@ from collections import deque
 from pyrepl.keymap import compile_keymap, parse_keys
 
 
-
 class InputTranslator:
     def push(self, evt):
         pass

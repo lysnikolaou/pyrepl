@@ -22,7 +22,7 @@ def interactive_console():
 
 def run_simple_interactive_console():
     console = code.InteractiveConsole(filename="<stdin>")
-    console.interact(banner='', exitmsg='')
+    console.interact(banner="", exitmsg="")
 
 
 if __name__ == "__main__":

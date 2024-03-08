@@ -70,7 +70,7 @@ def run_multiline_interactive_console():
                 break
             input_name = f"<python-input-{input_n}>"
             linecache._register_code(input_name, statement, "<stdin>")
-            more = console.push(_strip_final_indent(statement), filename=input_name)
+            more = console.push(_strip_final_indent(statement))
             input_n += 1
             assert not more
         except KeyboardInterrupt:
