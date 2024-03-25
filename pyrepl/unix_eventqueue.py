@@ -79,27 +79,27 @@ def general_keycodes():
     return keycodes
 
 
-def EventQueue(fd, encoding):
-    keycodes = general_keycodes()
-    if os.isatty(fd):
-        backspace = tcgetattr(fd)[6][VERASE]
-        keycodes[backspace] = "backspace"
-    k = keymap.compile_keymap(keycodes)
-    trace("keymap {k!r}", k=k)
-    return EncodedQueue(k, encoding)
-
-
-class EncodedQueue(object):
+class EventQueue(object):
     def __init__(self, keymap, encoding):
         self.k = self.ck = keymap
         self.events = deque()
         self.buf = bytearray()
         self.encoding = encoding
 
+    @classmethod
+    def create(cls, fd, encoding):
+        keycodes = general_keycodes()
+        if os.isatty(fd):
+            backspace = tcgetattr(fd)[6][VERASE]
+            keycodes[backspace] = "backspace"
+        k = keymap.compile_keymap(keycodes)
+        trace("keymap {k!r}", k=k)
+        return cls(k, encoding)
+
     def get(self):
-        if self.events:
+        try:
             return self.events.popleft()
-        else:
+        except IndexError:
             return None
 
     def empty(self):

@@ -257,7 +257,7 @@ class UnixConsole(Console):
 
         self.__move = self.__move_short
 
-        self.event_queue = EventQueue(self.input_fd, self.encoding)
+        self.event_queue = EventQueue.create(self.input_fd, self.encoding)
         self.cursor_visible = 1
 
     def change_encoding(self, encoding):
